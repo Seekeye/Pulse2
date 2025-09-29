@@ -22,8 +22,8 @@ const Dashboard = () => {
     recentSignals: []
   });
 
-  // WebSocket connection for real-time data (disabled for now)
-  // const { data: wsData, isConnected } = useWebSocket('wss://pulse-xxfq.onrender.com/ws');
+  // WebSocket connection for real-time data
+  const { data: wsData, isConnected } = useWebSocket('ws://localhost:8000/ws');
 
   // Fetch data from API
   const fetchDashboardData = async () => {
@@ -43,19 +43,20 @@ const Dashboard = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (wsData) {
-  //     setDashboardData(prev => ({
-  //       ...prev,
-  //       ...wsData
-  //     }));
-  //   }
-  // }, [wsData]);
+  useEffect(() => {
+    if (wsData) {
+      setDashboardData(prev => ({
+        ...prev,
+        ...wsData
+      }));
+    }
+  }, [wsData]);
 
   // Fetch data on component mount and every 10 seconds for real-time updates
   useEffect(() => {
     fetchDashboardData();
     const interval = setInterval(fetchDashboardData, 10000); // 10 seconds instead of 30
+
     return () => clearInterval(interval);
   }, []);
 
@@ -63,86 +64,80 @@ const Dashboard = () => {
     setSidebarCollapsed(!sidebarCollapsed);
   };
 
-  // ... existing code ...
-
-  const renderDashboardContent = () => {
-    switch (activeTab) {
-      case 'dashboard':
-        return (
-          <div className="space-y-6 w-full">
-            {/* Header Row */}
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 w-full">
-              <ActiveSignalsWidget data={dashboardData.activeSignals} />
-              <MarketOverviewWidget data={dashboardData.marketData} />
-              <PerformanceWidget data={dashboardData.performance} />
-            </div>
-
-            {/* Middle Row */}
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 w-full">
-              <IndicatorsWidget data={dashboardData.marketData} />
-              <TrackingEventsWidget data={dashboardData.trackingEvents} />
-            </div>
-
-
-
-            {/* Bottom Row */}
-            <div className="grid grid-cols-1 gap-6 w-full">
-              <RecentSignalsWidget data={dashboardData.recentSignals} />
-            </div>
-          </div>
-        );
-      case 'signals':
-        return <div>Signals Management</div>;
-      case 'tracking':
-        return <div>Signal Tracking</div>;
-      case 'settings':
-        return <div>Settings</div>;
-      default:
-        return <div>Dashboard</div>;
-    }
-  };
-
-  // ... existing code ...
-
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="min-h-screen bg-dark-bg text-white">
       {/* Sidebar */}
-      <div className={`${sidebarCollapsed ? 'w-16' : 'w-64'} transition-all duration-300`}>
-        <Sidebar 
-          collapsed={sidebarCollapsed} 
-          activeTab={activeTab} 
-          onTabChange={setActiveTab}
-          onDataRefresh={fetchDashboardData}
-        />
-      </div>
+      <Sidebar 
+        collapsed={sidebarCollapsed} 
+        activeTab={activeTab} 
+        onTabChange={setActiveTab}
+      />
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col">
+      <div className={`transition-all duration-300 ${sidebarCollapsed ? 'ml-16' : 'ml-64'}`}>
         {/* Header */}
         <Header 
           onToggleSidebar={toggleSidebar}
-          isConnected={isConnected}
-          activeTab={activeTab}
+          sidebarCollapsed={sidebarCollapsed}
+        />
+
+        {/* Floating Navbar */}
+        <FloatingNavbar 
+          activeTab={activeTab} 
+          onTabChange={setActiveTab}
         />
 
         {/* Dashboard Content */}
-        <main className="flex-1 p-6 overflow-y-auto">
-          <div className="w-full">
-            {renderDashboardContent()}
-          </div>
-        </main>
-      </div>
+        <div className="p-6 pt-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+            {/* Market Overview */}
+            <div className="lg:col-span-2 xl:col-span-1">
+              <MarketOverviewWidget 
+                marketData={dashboardData.marketData}
+                onRefresh={fetchDashboardData}
+              />
+            </div>
 
-      {/* Floating Navbar - Bottom Right */}
-      <FloatingNavbar 
-        activeTab={activeTab} 
-        onTabChange={setActiveTab}
-        isConnected={isConnected}
-      />
+            {/* Active Signals */}
+            <div className="lg:col-span-1 xl:col-span-1">
+              <ActiveSignalsWidget 
+                signals={dashboardData.activeSignals}
+                onRefresh={fetchDashboardData}
+              />
+            </div>
+
+            {/* Performance */}
+            <div className="lg:col-span-1 xl:col-span-1">
+              <PerformanceWidget 
+                performance={dashboardData.performance}
+              />
+            </div>
+
+            {/* Indicators */}
+            <div className="lg:col-span-2 xl:col-span-1">
+              <IndicatorsWidget 
+                marketData={dashboardData.marketData}
+              />
+            </div>
+
+            {/* Tracking Events */}
+            <div className="lg:col-span-1 xl:col-span-1">
+              <TrackingEventsWidget 
+                events={dashboardData.trackingEvents}
+              />
+            </div>
+
+            {/* Recent Signals */}
+            <div className="lg:col-span-1 xl:col-span-1">
+              <RecentSignalsWidget 
+                signals={dashboardData.recentSignals}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
-
-// ... existing code ...
-}
+};
 
 export default Dashboard;
