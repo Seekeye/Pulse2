@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "npm install && npm run build"
   publish = "dist"
 
 [[redirects]]
@@ -9,3 +9,15 @@
 
 [build.environment]
   NODE_VERSION = "18"
+  VITE_API_URL = "https://pulse-xxfq.onrender.com"
+
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
