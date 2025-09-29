@@ -8,12 +8,16 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "vercel-build": "npm install && npm run build"
+    "vercel-build": "npm install && npm run build",
+    "start:backend": "cd backend && python3 -m uvicorn api_endpoints:app --host 0.0.0.0 --port $PORT",
+    "start:frontend": "npm run build && npx serve -s dist -l $PORT",
+    "start:all": "concurrently \"npm run start:backend\" \"npm run start:frontend\""
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
     "@material-tailwind/react": "^2.1.10",
     "axios": "^1.6.0",
+    "concurrently": "^8.2.2",
     "framer-motion": "^10.16.4",
     "gsap": "^3.13.0",
     "lucide-react": "^0.292.0",
@@ -22,7 +26,8 @@
     "react-dom": "^18.2.0",
     "react-icons": "^5.5.0",
     "react-router-dom": "^6.30.1",
-    "recharts": "^2.8.0"
+    "recharts": "^2.8.0",
+    "serve": "^14.2.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
