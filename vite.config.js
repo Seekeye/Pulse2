@@ -7,12 +7,14 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'http://localhost:8000',
+        target: 'https://pulse-xxfq.onrender.com',
         changeOrigin: true,
+        secure: true,
       },
       '/ws': {
-        target: 'ws://localhost:8000',
+        target: 'wss://pulse-xxfq.onrender.com',
         ws: true,
+        secure: true,
       }
     }
   }

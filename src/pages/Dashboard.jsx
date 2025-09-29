@@ -22,8 +22,8 @@ const Dashboard = () => {
     recentSignals: []
   });
 
-  // WebSocket connection for real-time data
-  const { data: wsData, isConnected } = useWebSocket('ws://localhost:8000/ws');
+  // WebSocket connection for real-time data (disabled for now)
+  // const { data: wsData, isConnected } = useWebSocket('wss://pulse-xxfq.onrender.com/ws');
 
   // Fetch data from API
   const fetchDashboardData = async () => {
@@ -43,14 +43,14 @@ const Dashboard = () => {
     }
   };
 
-  useEffect(() => {
-    if (wsData) {
-      setDashboardData(prev => ({
-        ...prev,
-        ...wsData
-      }));
-    }
-  }, [wsData]);
+  // useEffect(() => {
+  //   if (wsData) {
+  //     setDashboardData(prev => ({
+  //       ...prev,
+  //       ...wsData
+  //     }));
+  //   }
+  // }, [wsData]);
 
   // Fetch data on component mount and every 10 seconds for real-time updates
   useEffect(() => {
