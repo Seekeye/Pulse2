@@ -374,9 +374,15 @@ async def health_check():
     """Health check endpoint"""
     return {"status": "healthy", "timestamp": datetime.utcnow().isoformat()}
 
-# Serve static files (frontend) - mount after all API routes
+@app.get("/")
+async def root():
+    """Redirect to Vercel frontend"""
+    from fastapi.responses import RedirectResponse
+    return RedirectResponse(url="https://pulse2-frontend.vercel.app")
+
+# Serve static files (frontend) - only in development
 import os
-if os.path.exists("../dist"):
+if os.path.exists("../dist") and os.getenv("ENVIRONMENT") != "production":
     app.mount("/", StaticFiles(directory="../dist", html=True), name="static")
 
 # Initialize Pulse Engine for analysis and Telegram notifications

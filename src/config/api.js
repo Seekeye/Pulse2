@@ -1,5 +1,5 @@
 // API Configuration
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://pulse-production.up.railway.app';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://pulse2-production.up.railway.app';
 
 export const API_ENDPOINTS = {
   DASHBOARD_DATA: `${API_BASE_URL}/api/dashboard-data`,
