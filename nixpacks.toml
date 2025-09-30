@@ -14,5 +14,5 @@ cmds = [
 ]
 
 [start]
-cmd = "source venv/bin/activate && npm run start:all"
+cmd = "./start.sh"
 

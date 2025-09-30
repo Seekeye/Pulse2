@@ -12,6 +12,7 @@ from typing import Dict, List, Any
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 import uvicorn
 
 # Setup logging
@@ -33,6 +34,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Serve static files (frontend)
+import os
+if os.path.exists("../dist"):
+    app.mount("/", StaticFiles(directory="../dist", html=True), name="static")
 
 # Global database manager
 db_manager = None
