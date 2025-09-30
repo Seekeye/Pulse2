@@ -88,8 +88,8 @@ const Dashboard = () => {
         />
 
         {/* Dashboard Content */}
-        <div className="p-6 pt-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div className="p-4 pt-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
             {/* Market Overview */}
             <div className="lg:col-span-2 xl:col-span-1">
               <MarketOverviewWidget 

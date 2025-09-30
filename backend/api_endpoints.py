@@ -36,8 +36,9 @@ app.add_middleware(
 )
 
 
-# Global database manager
+# Global database manager and pulse engine
 db_manager = None
+pulse_engine = None
 
 async def get_real_prices(symbols: List[str]) -> Dict[str, float]:
     """Get real-time prices for symbols using Coinbase API"""
@@ -377,6 +378,44 @@ async def health_check():
 import os
 if os.path.exists("../dist"):
     app.mount("/", StaticFiles(directory="../dist", html=True), name="static")
+
+# Initialize Pulse Engine for analysis and Telegram notifications
+async def initialize_pulse_engine():
+    """Initialize the Pulse Engine for analysis and notifications"""
+    global pulse_engine, db_manager
+    
+    try:
+        from core.pulse_engine import PulseEngine
+        from config.settings import settings
+        
+        print("🚀 Initializing Pulse Engine...")
+        pulse_engine = PulseEngine(settings)
+        
+        # Initialize the engine
+        if await pulse_engine.initialize():
+            print("✅ Pulse Engine initialized successfully")
+            db_manager = pulse_engine.database_manager
+            
+            # Start the engine in background
+            import asyncio
+            asyncio.create_task(pulse_engine.run())
+            print("🔄 Pulse Engine started in background")
+            
+            # Send startup notification to Telegram
+            if pulse_engine.telegram_bot:
+                await pulse_engine.telegram_bot.send_message("🚀 ChainPulse API Server started successfully!")
+                print("📱 Startup notification sent to Telegram")
+        else:
+            print("❌ Failed to initialize Pulse Engine")
+            
+    except Exception as e:
+        print(f"❌ Error initializing Pulse Engine: {e}")
+
+# Startup event
+@app.on_event("startup")
+async def startup_event():
+    """Initialize services on startup"""
+    await initialize_pulse_engine()
 
 if __name__ == "__main__":
     print("🚀 Starting ChainPulse API Server...")
