@@ -41,54 +41,94 @@ body {
 }
 
 /* Custom utility classes */
-@layer utilities {
-  .text-gradient {
-    background: linear-gradient(135deg, #00D4FF 0%, #0099CC 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  
-  .glass {
-    background: rgba(26, 26, 26, 0.8);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(42, 42, 42, 0.3);
-  }
-  
-  .glow {
-    box-shadow: 0 0 20px #00D4FF;
-  }
-  
-  .glow-hover:hover {
-    box-shadow: 0 0 30px #00D4FF;
-  }
-  
-  .hover-lift {
-    transition: transform 0.3s ease;
-  }
-  
-  .hover-lift:hover {
-    transform: translateY(-5px);
-  }
+.text-gradient {
+  background: linear-gradient(135deg, #00D4FF 0%, #0099CC 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass {
+  background: rgba(26, 26, 26, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(42, 42, 42, 0.3);
+}
+
+.glow {
+  box-shadow: 0 0 20px #00D4FF;
+}
+
+.glow-hover:hover {
+  box-shadow: 0 0 30px #00D4FF;
+}
+
+.hover-lift {
+  transition: transform 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
 }
 
 /* Custom components */
-@layer components {
-  .btn-primary {
-    @apply bg-electric-blue hover:bg-electric-blue-dark text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-electric-blue/25;
-  }
-  
-  .btn-secondary {
-    @apply bg-dark-surface hover:bg-dark-border text-white font-semibold py-2 px-4 rounded-lg border border-dark-border transition-all duration-300 hover:shadow-lg;
-  }
-  
-  .card {
-    @apply bg-dark-surface border border-dark-border rounded-xl p-6 shadow-lg hover:shadow-xl hover:shadow-electric-blue/10 transition-all duration-300;
-  }
-  
-  .input-field {
-    @apply bg-dark-surface border border-dark-border rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:border-electric-blue focus:ring-1 focus:ring-electric-blue transition-all duration-300;
-  }
+.btn-primary {
+  background-color: #00D4FF;
+  color: white;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #0099CC;
+  box-shadow: 0 10px 15px -3px rgba(0, 212, 255, 0.25);
+}
+
+.btn-secondary {
+  background-color: #1A1A1A;
+  color: white;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #2A2A2A;
+  transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+  background-color: #2A2A2A;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+  background-color: #1A1A1A;
+  border: 1px solid #2A2A2A;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+}
+
+.card:hover {
+  box-shadow: 0 25px 50px -12px rgba(0, 212, 255, 0.1);
+}
+
+.input-field {
+  background-color: #1A1A1A;
+  border: 1px solid #2A2A2A;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  color: white;
+  transition: all 0.3s;
+}
+
+.input-field:focus {
+  border-color: #00D4FF;
+  outline: 1px solid #00D4FF;
+}
+
+.input-field::placeholder {
+  color: #9CA3AF;
 }
 
 /* Custom animations */
@@ -153,8 +193,9 @@ body {
 }
 
 /* Custom focus styles */
-.focus-ring {
-  @apply focus:outline-none focus:ring-2 focus:ring-electric-blue focus:ring-offset-2 focus:ring-offset-dark-bg;
+.focus-ring:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #00D4FF, 0 0 0 4px rgba(0, 212, 255, 0.1);
 }
 
 /* Selection styles */
