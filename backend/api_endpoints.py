@@ -35,10 +35,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Serve static files (frontend)
-import os
-if os.path.exists("../dist"):
-    app.mount("/", StaticFiles(directory="../dist", html=True), name="static")
 
 # Global database manager
 db_manager = None
@@ -376,6 +372,11 @@ async def get_tracking_events(signal_id: str = None, limit: int = 50):
 async def health_check():
     """Health check endpoint"""
     return {"status": "healthy", "timestamp": datetime.utcnow().isoformat()}
+
+# Serve static files (frontend) - mount after all API routes
+import os
+if os.path.exists("../dist"):
+    app.mount("/", StaticFiles(directory="../dist", html=True), name="static")
 
 if __name__ == "__main__":
     print("🚀 Starting ChainPulse API Server...")
