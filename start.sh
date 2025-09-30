@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Create and activate Python virtual environment
+echo "Creating Python virtual environment..."
+python -m venv venv
+source venv/bin/activate
+
 # Install Python dependencies
 echo "Installing Python dependencies..."
 pip install -r backend/requirements.txt
