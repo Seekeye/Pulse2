@@ -7,12 +7,12 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'https://pulse-xxfq.onrender.com',
+        target: 'https://pulse2-production.up.railway.app',
         changeOrigin: true,
         secure: true,
       },
       '/ws': {
-        target: 'wss://pulse-xxfq.onrender.com',
+        target: 'wss://pulse2-production.up.railway.app',
         ws: true,
         secure: true,
       }

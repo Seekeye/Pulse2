@@ -66,6 +66,12 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-dark-bg text-white">
+      {/* Test styles */}
+      <div className="bg-electric-blue text-white p-4 m-4 rounded-lg">
+        <h1 className="text-2xl font-bold">Test: Estilos funcionando</h1>
+        <p className="text-sm">Si ves este mensaje con fondo azul, los estilos están funcionando</p>
+      </div>
+      
       {/* Sidebar */}
       <Sidebar 
         collapsed={sidebarCollapsed} 
