@@ -12,7 +12,7 @@ from typing import Dict, List, Any
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from fastapi.staticfiles import StaticFiles
+# StaticFiles removed - frontend deployed separately
 import uvicorn
 
 # Setup logging
@@ -380,10 +380,7 @@ async def root():
     from fastapi.responses import RedirectResponse
     return RedirectResponse(url="https://pulse2-frontend.vercel.app")
 
-# Serve static files (frontend) - only in development
-import os
-if os.path.exists("../dist") and os.getenv("ENVIRONMENT") != "production":
-    app.mount("/", StaticFiles(directory="../dist", html=True), name="static")
+# Frontend is now deployed separately on Vercel
 
 # Initialize Pulse Engine for analysis and Telegram notifications
 async def initialize_pulse_engine():

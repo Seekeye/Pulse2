@@ -1,17 +1,15 @@
 [phases.setup]
-nixPkgs = ["python311", "python311Packages.pip", "nodejs"]
+nixPkgs = ["python311", "python311Packages.pip"]
 
 [phases.install]
 cmds = [
   "python -m venv venv",
-  "source venv/bin/activate && pip install -r backend/requirements.txt",
-  "npm ci",
-  "npm run build"
+  "source venv/bin/activate && pip install -r backend/requirements.txt"
 ]
 
 [phases.build]
 cmds = [
-  "echo 'Frontend already built in install phase'"
+  "echo 'Backend only - no frontend build needed'"
 ]
 
 [start]
