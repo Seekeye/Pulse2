@@ -5,12 +5,13 @@ nixPkgs = ["python311", "python311Packages.pip", "nodejs"]
 cmds = [
   "python -m venv venv",
   "source venv/bin/activate && pip install -r backend/requirements.txt",
-  "npm ci"
+  "npm ci",
+  "npm run build"
 ]
 
 [phases.build]
 cmds = [
-  "npm run build"
+  "echo 'Frontend already built in install phase'"
 ]
 
 [start]
